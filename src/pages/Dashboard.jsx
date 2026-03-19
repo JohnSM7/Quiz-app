@@ -4,11 +4,11 @@ import { useQuiz } from '../context/QuizContext';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { user, logout, joinGame, allQuizzes } = useQuiz();
+  const { user, logout, startSoloGame, allQuizzes } = useQuiz();
 
   const handleStartQuiz = async (quizId) => {
-    await joinGame(user?.username || 'Invitado');
-    navigate('/lobby');
+    await startSoloGame(user?.username || 'Invitado', quizId);
+    navigate('/juego');
   };
 
   // Filter quizzes based on user's assignments

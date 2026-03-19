@@ -10,6 +10,7 @@ export function useQuiz() {
 
 export function QuizProvider({ children }) {
   const [room, setRoom] = useState(null);
+  const [soloRoom, setSoloRoom] = useState(null);
   const [currentPlayerId, setCurrentPlayerId] = useState(() => localStorage.getItem('currentPlayerId') || null);
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem('quiz_user');
@@ -106,6 +107,29 @@ export function QuizProvider({ children }) {
       streak: 0,
     });
     return playerId;
+  };
+
+  const startSoloGame = async (nickname, quizId) => {
+    const playerId = 'solo_' + (user?.username?.toLowerCase() || 'invitado');
+    localStorage.setItem('currentPlayerId', playerId);
+    setCurrentPlayerId(playerId);
+    setActiveQuizId(quizId);
+
+    const soloRef = ref(db, `rooms/solo_${playerId}`);
+    const initialSolo = {
+      status: 'playing',
+      currentQuestionIndex: 0,
+      activeQuizId: quizId,
+      players: {
+        [playerId]: { nickname, score: 0, streak: 0 }
+      }
+    };
+    await set(soloRef, initialSolo);
+    
+    // Subscribe to this solo room
+    onValue(soloRef, (snap) => {
+      if (snap.exists()) setRoom(snap.val());
+    });
   };
 
   const submitAnswer = async (selectedOption, isCorrect, timeRemaining) => {
@@ -205,6 +229,7 @@ export function QuizProvider({ children }) {
       createQuiz,
       createUser,
       assignQuizToUser,
+      startSoloGame,
       activeQuizId
     }}>
       {children}
