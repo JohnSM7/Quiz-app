@@ -127,6 +127,13 @@ export function QuizProvider({ children }) {
     });
   };
 
+  const createQuiz = async (quizData) => {
+    const quizId = 'q_' + Date.now();
+    const newQuiz = { ...quizData, id: quizId };
+    await set(ref(db, `quizzes/${quizId}`), newQuiz);
+    return quizId;
+  };
+
   const saveQuizResult = async (quizId, score) => {
     if (!user) return;
     const username = user.username.toLowerCase();
@@ -170,6 +177,7 @@ export function QuizProvider({ children }) {
       login,
       logout,
       saveQuizResult,
+      createQuiz,
       activeQuizId
     }}>
       {children}
