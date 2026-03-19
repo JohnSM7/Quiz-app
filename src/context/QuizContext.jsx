@@ -11,6 +11,10 @@ export function useQuiz() {
 export function QuizProvider({ children }) {
   const [room, setRoom] = useState(null);
   const [currentPlayerId, setCurrentPlayerId] = useState(() => localStorage.getItem('currentPlayerId') || null);
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem('quiz_user');
+    return saved ? JSON.parse(saved) : null;
+  });
 
   // Sync Room State continuously
   useEffect(() => {
@@ -41,6 +45,22 @@ export function QuizProvider({ children }) {
       currentQuestionIndex: index,
       status: 'playing' 
     });
+  };
+
+  // Auth Controls
+  const login = (username, password) => {
+    // Simple demo logic: "admin" for admin, anything else for participant
+    const role = username.toLowerCase() === 'admin' ? 'admin' : 'participant';
+    const userData = { username, role };
+    setUser(userData);
+    localStorage.setItem('quiz_user', JSON.stringify(userData));
+    return role;
+  };
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('quiz_user');
+    localStorage.removeItem('currentPlayerId');
   };
 
   // Player Controls
@@ -91,12 +111,15 @@ export function QuizProvider({ children }) {
   return (
     <QuizContext.Provider value={{
       room,
+      user,
       currentPlayer,
       currentPlayerId,
       setRoomStatus,
       nextQuestion,
       joinGame,
-      submitAnswer
+      submitAnswer,
+      login,
+      logout
     }}>
       {children}
     </QuizContext.Provider>

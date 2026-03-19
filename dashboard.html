@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#cf94ff",
+                        "accent-cyan": "#26fedc",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#080b27",
+                        "surface-container": "#1f1f22",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(207, 148, 255, 0.3);
+        }
+        .neon-glow-cyan {
+            box-shadow: 0 0 15px rgba(38, 254, 220, 0.4);
+        }
+        .stadium-gradient {
+            background: radial-gradient(circle at top, #1a0f23 0%, #080b27 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-slate-100 min-h-screen stadium-gradient">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex items-center bg-background-dark/80 backdrop-blur-md p-4 justify-between border-b border-white/5">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</div>
+<h2 class="text-white text-xl font-extrabold tracking-tighter uppercase italic flex-1 text-center">
+            Electric <span class="text-accent-cyan">Arena</span>
+</h2>
+<div class="flex w-10 items-center justify-end relative">
+<button class="flex items-center justify-center rounded-full size-10 bg-white/5 text-white hover:bg-white/10">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-accent-cyan rounded-full border border-background-dark"></span>
+</button>
+</div>
+</header>
+<main class="pb-24">
+<!-- Personal Profile Card (Glassmorphism) -->
+<section class="p-4 pt-6">
+<div class="glass-card rounded-xl p-6 relative overflow-hidden">
+<div class="absolute -right-4 -top-4 size-32 bg-primary/20 blur-3xl rounded-full"></div>
+<div class="flex items-center gap-5 relative z-10">
+<div class="relative">
+<div class="size-20 rounded-full p-1 bg-gradient-to-tr from-primary to-accent-cyan">
+<div class="size-full rounded-full bg-background-dark overflow-hidden bg-cover bg-center" data-alt="Avatar de perfil de usuario gamer moderno" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBzrIKqyz29WO2C06jx7Aue4jKpo1-nZQkgqcIkGvok2bWwkJlUic8AGZmEWqXQSd_P8Sw9-B_6--4-UyO1zHDi_yIvgo052bZ0P63bpCS3PnppegaLDgNkgf5sjNfzcFVDyczRvOh7C4Chs6ZV-TfwUDBhdiC0Glw4c7RK0q9tJFMzDNMZCNRCOqezBHa97OYQlwXEwTGVSwN_SPDKWMUCJvOmg59cWgSRnIsPxyTvtMepNuJfE9aPIepb1JPwM6h5kCa_cRX5-mQ')">
+</div>
+</div>
+<div class="absolute -bottom-1 -right-1 bg-accent-cyan text-background-dark text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">
+                            Pro
+                        </div>
+</div>
+<div class="flex flex-col">
+<h1 class="text-white text-3xl font-black leading-none tracking-tight">ALEX</h1>
+<div class="flex gap-3 mt-2">
+<div class="flex flex-col">
+<span class="text-white/50 text-[10px] uppercase font-bold tracking-widest">Nivel</span>
+<span class="text-primary font-bold text-lg leading-none">12</span>
+</div>
+<div class="w-px h-8 bg-white/10 self-center"></div>
+<div class="flex flex-col">
+<span class="text-white/50 text-[10px] uppercase font-bold tracking-widest">Experiencia</span>
+<span class="text-accent-cyan font-bold text-lg leading-none">8,450 XP</span>
+</div>
+</div>
+</div>
+</div>
+<!-- XP Bar -->
+<div class="mt-6 w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-accent-cyan w-[75%] rounded-full shadow-[0_0_10px_rgba(38,254,220,0.5)]"></div>
+</div>
+</div>
+</section>
+<!-- Tabs Section -->
+<section class="mt-4">
+<h3 class="text-white tracking-tighter text-2xl font-black px-4 mb-4 italic uppercase">Mis Quizzes Asignados</h3>
+<div class="flex px-4 gap-6 border-b border-white/5">
+<button class="flex flex-col items-center pb-3 border-b-2 border-primary">
+<p class="text-primary text-sm font-black uppercase tracking-wider">Activos</p>
+</button>
+<button class="flex flex-col items-center pb-3 border-b-2 border-transparent opacity-40">
+<p class="text-white text-sm font-black uppercase tracking-wider">Completados</p>
+</button>
+<button class="flex flex-col items-center pb-3 border-b-2 border-transparent opacity-40">
+<p class="text-white text-sm font-black uppercase tracking-wider">Favoritos</p>
+</button>
+</div>
+</section>
+<!-- Quiz List Section -->
+<section class="p-4 space-y-4">
+<!-- Quiz Card 1 -->
+<div class="bg-surface-container rounded-xl overflow-hidden border border-white/5 flex flex-col group">
+<div class="h-32 bg-cover bg-center relative" data-alt="Ilustración vibrante de personajes de superhéroes de Marvel" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0G76r2KEWdGhVnUtSBI6uTLmwRFwxZmiaCmMiLeyfjCS_e36AEHLfebZfTbPBXDOT5AnOunY6q5v1c4jhJct44rhmSqWNPSdr28GKpU0TLlqE7hPXDIk8yk04Z_yrmqu4Bb-y6QL4uG91sP3aBv0Qifgzve1Nq7_OhFK5p_GTMmucx1FOg-2Z9ZnH4m5Xoe-ygKcTWTr_Qm79p5ESh8OX0k7AvqmeMhJcotSFRIeAlaiFBlpf5kJ2OvqSvIoJb0oyTpgV9tTyql4')">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
+<div class="absolute top-3 left-3 bg-primary/90 text-background-dark text-[10px] font-black px-2 py-1 rounded italic uppercase">PELÍCULAS</div>
+</div>
+<div class="p-4 -mt-6 relative z-10 flex justify-between items-end">
+<div>
+<h4 class="text-white text-xl font-black tracking-tight uppercase italic">Reto Marvel</h4>
+<p class="text-white/60 text-xs font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-accent-cyan">timer</span> 15 Preguntas • 10m
+                        </p>
+</div>
+<button class="bg-accent-cyan hover:bg-white text-background-dark font-black px-5 py-2 rounded-lg text-sm transition-all neon-glow-cyan uppercase tracking-tighter italic">
+                        COMENZAR
+                    </button>
+</div>
+</div>
+<!-- Quiz Card 2 (Asymmetric accent) -->
+<div class="bg-surface-container rounded-xl overflow-hidden border border-white/5 flex flex-col relative">
+<div class="absolute top-0 right-0 w-1.5 h-full bg-primary"></div>
+<div class="h-32 bg-cover bg-center relative" data-alt="Collage artístico de cómics de DC Universe" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBHeMeuAiGEyBN1FNkjCwHgPo1bEpufub0PhfG5ZU3pfYawU-t5rtVG3CzaFzRQsU10loOY5GglKBl8ZP8amYR1oKwsVdd1oFEIadgoRQklVb0i8KnZ8kifbrSqM3gTWnwp_9RpCqS-TnsbGa10DzhtHHq_hOlQwelRBC6Z5TGVfdhehr_ri4E49ZaQm_neJJaciZcqjrAv-5Y9AcYh782Akye0oK13B1Kj0F2MSyHNEotQvRSjBXSgHJ3AMJeJ7XXp1zXjAQHFzeQ')">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
+<div class="absolute top-3 left-3 bg-primary/90 text-background-dark text-[10px] font-black px-2 py-1 rounded italic uppercase">CÓMICS</div>
+</div>
+<div class="p-4 -mt-6 relative z-10 flex justify-between items-end">
+<div>
+<h4 class="text-white text-xl font-black tracking-tight uppercase italic">DC Universe</h4>
+<p class="text-white/60 text-xs font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-accent-cyan">timer</span> 20 Preguntas • 15m
+                        </p>
+</div>
+<button class="bg-accent-cyan hover:bg-white text-background-dark font-black px-5 py-2 rounded-lg text-sm transition-all neon-glow-cyan uppercase tracking-tighter italic">
+                        COMENZAR
+                    </button>
+</div>
+</div>
+<!-- Quiz Card 3 -->
+<div class="bg-surface-container rounded-xl overflow-hidden border border-white/5 flex flex-col">
+<div class="h-32 bg-cover bg-center relative" data-alt="Imagen de consolas retro y gaming moderno" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDN6nWx2YLjcJEBJVLzHl8LRxkRoQI0JXqXLybozyYkmATIc-xLg7p2u7v1Du2Upl4luVx571UUMfGxHwV1Drw5K59lqy3jO8iYUOit2CSgSvMwjeyfhInqHlTBVTWS4sssfPYrAQAWymrQugpJTzV6xA0hi5uh5u1PBtmPrMdtWHDJbIUmBkjQFBHWnqurPei3_ZGGuh5xAWIZa1qNfQ5CVQlN9kFfOe2_qZmVp-ZjC5BRFf9vS409PGkK3RgG6YFazsrV3NtMfMM')">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
+<div class="absolute top-3 left-3 bg-primary/90 text-background-dark text-[10px] font-black px-2 py-1 rounded italic uppercase">CONSOLAS</div>
+</div>
+<div class="p-4 -mt-6 relative z-10 flex justify-between items-end">
+<div>
+<h4 class="text-white text-xl font-black tracking-tight uppercase italic">Historia Gaming</h4>
+<p class="text-white/60 text-xs font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-accent-cyan">timer</span> 12 Preguntas • 8m
+                        </p>
+</div>
+<button class="bg-accent-cyan hover:bg-white text-background-dark font-black px-5 py-2 rounded-lg text-sm transition-all neon-glow-cyan uppercase tracking-tighter italic">
+                        COMENZAR
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-surface-container/95 backdrop-blur-lg border-t border-white/10 px-4 pb-6 pt-3 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 text-white/40" href="#">
+<span class="material-symbols-outlined">home</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Inicio</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary relative" href="#">
+<div class="absolute -top-10 bg-primary text-background-dark p-3 rounded-full shadow-[0_0_20px_rgba(207,148,255,0.6)] border-4 border-background-dark">
+<span class="material-symbols-outlined !text-3xl">quiz</span>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest mt-6">Quizzes</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-white/40" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Ranking</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-white/40" href="#">
+<span class="material-symbols-outlined">person</span>
+<p class="text-[10px] font-bold uppercase tracking-widest">Perfil</p>
+</a>
+</nav>
+</body></html>

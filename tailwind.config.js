@@ -26,6 +26,8 @@ export default {
         "on-secondary": "#005d4f",
         "on-secondary-fixed": "#00483d",
         "background": "#0e0e10",
+        "background-dark": "#080b27",
+        "accent-cyan": "#26fedc",
         "surface-bright": "#2c2c2f",
         "surface-tint": "#d095ff",
         "outline-variant": "#48474a",

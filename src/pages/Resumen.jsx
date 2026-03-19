@@ -40,8 +40,8 @@ export default function Resumen() {
 <div className="relative w-48 h-48 md:w-56 md:h-56 flex items-center justify-center">
 
 <svg className="absolute inset-0 w-full h-full -rotate-90">
-<circle className="text-surface-container-highest" cx="50%" cy="50%" fill="transparent" r="45%" stroke="currentColor" strokeWidth="8" />
-<circle className="text-secondary drop-shadow-[0_0_8px_rgba(38,254,220,0.5)]" cx="50%" cy="50%" fill="transparent" r="45%" stroke="currentColor" strokeDasharray="282.7" strokeDashoffset="84.8" strokeWidth="12" />
+<circle className="text-surface-container-highest" cx="50%" cy="50%" fill="transparent" r="45%" stroke="currentColor" strokeWidth="8" /></circle>
+<circle className="text-secondary drop-shadow-[0_0_8px_rgba(38,254,220,0.5)]" cx="50%" cy="50%" fill="transparent" r="45%" stroke="currentColor" stroke-dasharray="282.7" stroke-dashoffset="84.8" strokeWidth="12" /></circle>
 </svg>
 <div className="text-center">
 <span className="block font-headline font-black text-5xl md:text-6xl text-white">7/10</span>

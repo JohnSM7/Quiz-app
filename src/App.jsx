@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom'
+import { useQuiz, QuizProvider } from './context/QuizContext'
 import Admin from './pages/Admin'
 import Feedback from './pages/Feedback'
 import FeedbackSimple from './pages/FeedbackSimple'
@@ -7,38 +8,36 @@ import Lobby from './pages/Lobby'
 import PantallaJuego from './pages/PantallaJuego'
 import Podio from './pages/Podio'
 import Resumen from './pages/Resumen'
+import Login from './pages/Login'
+import Dashboard from './pages/Dashboard'
 
-function Navigation() {
-  return (
-    <div className="fixed top-24 right-4 z-[9999] opacity-30 hover:opacity-100 transition-opacity bg-background/90 p-3 rounded-lg text-xs space-y-2 text-on-surface flex flex-col border border-outline-variant/50 backdrop-blur-xl">
-      <div className="font-bold text-primary mb-1 uppercase tracking-widest text-[10px]">Dev Nav</div>
-      <Link to="/" className="hover:text-primary transition-colors hover:translate-x-1">1. Admin / Setup</Link>
-      <Link to="/lobby" className="hover:text-primary transition-colors hover:translate-x-1">2. Lobby</Link>
-      <Link to="/instrucciones" className="hover:text-primary transition-colors hover:translate-x-1">3. Instrucciones</Link>
-      <Link to="/juego" className="hover:text-primary transition-colors hover:translate-x-1">4. Pantalla Juego</Link>
-      <Link to="/feedback" className="hover:text-primary transition-colors hover:translate-x-1">5. Feedback</Link>
-      <Link to="/resumen" className="hover:text-primary transition-colors hover:translate-x-1">6. Resumen</Link>
-      <Link to="/podio" className="hover:text-primary transition-colors hover:translate-x-1">7. Podio</Link>
-    </div>
-  );
+function RequireAuth({ children, role }) {
+  const { user } = useQuiz();
+  if (!user) return <Navigate to="/login" />;
+  if (role && user.role !== role) return <Navigate to={user.role === 'admin' ? '/admin' : '/dashboard'} />;
+  return children;
 }
-
-import { QuizProvider } from './context/QuizContext'
 
 function App() {
   return (
     <QuizProvider>
       <BrowserRouter>
-        <Navigation />
         <Routes>
-          <Route path="/" element={<Admin />} />
-          <Route path="/juego" element={<PantallaJuego />} />
-          <Route path="/lobby" element={<Lobby />} />
-          <Route path="/instrucciones" element={<Instrucciones />} />
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/feedback-simple" element={<FeedbackSimple />} />
-          <Route path="/podio" element={<Podio />} />
-          <Route path="/resumen" element={<Resumen />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Navigate to="/login" />} />
+          
+          {/* Protected Participant Routes */}
+          <Route path="/dashboard" element={<RequireAuth role="participant"><Dashboard /></RequireAuth>} />
+          <Route path="/juego" element={<RequireAuth role="participant"><PantallaJuego /></RequireAuth>} />
+          <Route path="/lobby" element={<RequireAuth role="participant"><Lobby /></RequireAuth>} />
+          <Route path="/instrucciones" element={<RequireAuth role="participant"><Instrucciones /></RequireAuth>} />
+          <Route path="/feedback" element={<RequireAuth role="participant"><Feedback /></RequireAuth>} />
+          <Route path="/feedback-simple" element={<RequireAuth role="participant"><FeedbackSimple /></RequireAuth>} />
+          <Route path="/resumen" element={<RequireAuth role="participant"><Resumen /></RequireAuth>} />
+          
+          {/* Protected Admin Routes */}
+          <Route path="/admin" element={<RequireAuth role="admin"><Admin /></RequireAuth>} />
+          <Route path="/podio" element={<RequireAuth role="admin"><Podio /></RequireAuth>} />
         </Routes>
       </BrowserRouter>
     </QuizProvider>

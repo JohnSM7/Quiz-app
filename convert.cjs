@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const files = ['admin.html', 'feedback.html', 'feedback_simple.html', 'instrucciones.html', 'lobby.html', 'pantalla_juego.html', 'podio.html', 'resumen.html'];
+const files = ['admin.html', 'feedback.html', 'feedback_simple.html', 'instrucciones.html', 'lobby.html', 'pantalla_juego.html', 'podio.html', 'resumen.html', 'login.html', 'dashboard.html'];
 
 fs.mkdirSync('src/pages', { recursive: true });
 
