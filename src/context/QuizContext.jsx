@@ -16,6 +16,7 @@ export function QuizProvider({ children }) {
     return saved ? JSON.parse(saved) : null;
   });
   const [allQuizzes, setAllQuizzes] = useState({});
+  const [allUsers, setAllUsers] = useState({});
   const [activeQuizId, setActiveQuizId] = useState(null);
 
   // Sync Room State continuously
@@ -25,9 +26,8 @@ export function QuizProvider({ children }) {
       if (snapshot.exists()) {
         setRoom(snapshot.val());
       } else {
-        // Init room if empty string/doesn't exist
         const initialRoom = {
-          status: 'lobby', // lobby, instructions, playing, feedback, podium
+          status: 'lobby',
           currentQuestionIndex: 0,
           players: {}
         };
@@ -42,6 +42,15 @@ export function QuizProvider({ children }) {
     const qRef = ref(db, 'quizzes');
     const unsubscribe = onValue(qRef, (snapshot) => {
       if (snapshot.exists()) setAllQuizzes(snapshot.val());
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Sync Global Users
+  useEffect(() => {
+    const uRef = ref(db, 'users');
+    const unsubscribe = onValue(uRef, (snapshot) => {
+      if (snapshot.exists()) setAllUsers(snapshot.val());
     });
     return () => unsubscribe();
   }, []);
@@ -101,25 +110,20 @@ export function QuizProvider({ children }) {
 
   const submitAnswer = async (selectedOption, isCorrect, timeRemaining) => {
     if (!currentPlayerId) return;
-    
-    // Calculate Score (Simple base 1000 + time bonus)
     const pts = isCorrect ? 1000 + (timeRemaining * 10) : 0;
-
     const playerRef = ref(db, `rooms/main/players/${currentPlayerId}`);
     const snapshot = await get(playerRef);
     if (!snapshot.exists()) return;
 
     let { score = 0, streak = 0 } = snapshot.val();
-    
     if (isCorrect) {
       streak += 1;
-      score += pts + (streak * 100); // Streak Bonus
+      score += pts + (streak * 100);
     } else {
       streak = 0;
     }
 
     await update(playerRef, { score, streak });
-    // Save their answer to specific question to avoid double answering
     await set(ref(db, `rooms/main/answers/${room?.currentQuestionIndex}/${currentPlayerId}`), {
       selectedOption,
       isCorrect,
@@ -128,21 +132,42 @@ export function QuizProvider({ children }) {
   };
 
   const createQuiz = async (quizData) => {
-    const quizId = 'q_' + Date.now();
+    const quizId = quizData.id || 'q_' + Date.now();
     const newQuiz = { ...quizData, id: quizId };
     await set(ref(db, `quizzes/${quizId}`), newQuiz);
     return quizId;
+  };
+
+  const createUser = async (userData) => {
+    const username = userData.username.toLowerCase();
+    await set(ref(db, `users/${username}`), {
+      ...userData,
+      role: 'participant',
+      stats: { xp: 0, level: 1 },
+      assignedQuizzes: []
+    });
+  };
+
+  const assignQuizToUser = async (username, quizId) => {
+    const cleanUsername = username.toLowerCase();
+    const userRef = ref(db, `users/${cleanUsername}`);
+    const snap = await get(userRef);
+    if (snap.exists()) {
+      const uData = snap.val();
+      const assigned = uData.assignedQuizzes || [];
+      if (!assigned.includes(quizId)) {
+        await update(userRef, {
+          assignedQuizzes: [...assigned, quizId]
+        });
+      }
+    }
   };
 
   const saveQuizResult = async (quizId, score) => {
     if (!user) return;
     const username = user.username.toLowerCase();
     const resultRef = ref(db, `users/${username}/results/${Date.now()}`);
-    await set(resultRef, {
-      quizId,
-      score,
-      date: new Date().toISOString()
-    });
+    await set(resultRef, { quizId, score, date: new Date().toISOString() });
     
     // Update stats
     const statsRef = ref(db, `users/${username}/stats`);
@@ -154,9 +179,8 @@ export function QuizProvider({ children }) {
       level: Math.floor(newXp / 1000) + 1
     });
     
-    // Refresh user
-    const userRef = ref(db, `users/${username}`);
-    const updatedUser = await get(userRef);
+    // Refresh local user
+    const updatedUser = await get(ref(db, `users/${username}`));
     setUser(updatedUser.val());
     localStorage.setItem('quiz_user', JSON.stringify(updatedUser.val()));
   };
@@ -168,6 +192,7 @@ export function QuizProvider({ children }) {
       room,
       user,
       allQuizzes,
+      allUsers,
       currentPlayer,
       currentPlayerId,
       setRoomStatus,
@@ -178,6 +203,8 @@ export function QuizProvider({ children }) {
       logout,
       saveQuizResult,
       createQuiz,
+      createUser,
+      assignQuizToUser,
       activeQuizId
     }}>
       {children}
