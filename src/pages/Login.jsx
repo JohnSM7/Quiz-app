@@ -7,14 +7,24 @@ export default function Login() {
   const { login } = useQuiz();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const role = login(username, password);
-    if (role === 'admin') {
-      navigate('/admin');
-    } else {
-      navigate('/dashboard');
+    setError('');
+    setLoading(true);
+    try {
+      const role = await login(username, password);
+      if (role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -36,14 +46,16 @@ export default function Login() {
         </header>
 
         <form onSubmit={handleLogin} className="space-y-6">
+          {error && <div className="p-3 rounded-lg bg-error-container text-on-error-container text-sm font-bold text-center border border-error/20">{error}</div>}
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium text-primary/80 ml-1">Email/Usuario</label>
             <div className="relative">
               <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/50">person</span>
               <input 
                 className="glass-card w-full h-14 pl-12 pr-4 rounded-xl text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all border border-outline-variant/10" 
-                placeholder="Tu usuario o email (Escribe 'admin' para panel control)" 
+                placeholder="Prueba con 'alex' o 'admin'" 
                 type="text"
+                disabled={loading}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -58,8 +70,9 @@ export default function Login() {
               <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/50">lock</span>
               <input 
                 className="glass-card w-full h-14 pl-12 pr-12 rounded-xl text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all border border-outline-variant/10" 
-                placeholder="Cualquier contraseña servirá" 
+                placeholder="Pass en seed es '123'" 
                 type="password"
+                disabled={loading}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -67,9 +80,10 @@ export default function Login() {
           </div>
           <button 
             type="submit"
-            className="w-full h-14 mt-4 bg-gradient-to-r from-primary to-primary-container rounded-xl text-on-primary-container font-headline font-bold text-lg tracking-widest hover:shadow-[0_0_30px_rgba(208,149,255,0.4)] active:scale-[0.98] transition-all uppercase"
+            disabled={loading}
+            className="w-full h-14 mt-4 bg-gradient-to-r from-primary to-primary-container rounded-xl text-on-primary-container font-headline font-bold text-lg tracking-widest hover:shadow-[0_0_30px_rgba(208,149,255,0.4)] active:scale-[0.98] transition-all uppercase disabled:opacity-50"
           >
-            ENTRAR
+            {loading ? 'Entrando...' : 'ENTRAR'}
           </button>
         </form>
 

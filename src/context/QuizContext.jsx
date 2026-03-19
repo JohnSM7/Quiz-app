@@ -15,6 +15,8 @@ export function QuizProvider({ children }) {
     const saved = localStorage.getItem('quiz_user');
     return saved ? JSON.parse(saved) : null;
   });
+  const [allQuizzes, setAllQuizzes] = useState({});
+  const [activeQuizId, setActiveQuizId] = useState(null);
 
   // Sync Room State continuously
   useEffect(() => {
@@ -35,6 +37,15 @@ export function QuizProvider({ children }) {
     return () => unsubscribe();
   }, []);
 
+  // Sync Global Quizzes
+  useEffect(() => {
+    const qRef = ref(db, 'quizzes');
+    const unsubscribe = onValue(qRef, (snapshot) => {
+      if (snapshot.exists()) setAllQuizzes(snapshot.val());
+    });
+    return () => unsubscribe();
+  }, []);
+
   // Admin Controls
   const setRoomStatus = (status) => {
     update(ref(db, 'rooms/main'), { status });
@@ -48,13 +59,22 @@ export function QuizProvider({ children }) {
   };
 
   // Auth Controls
-  const login = (username, password) => {
-    // Simple demo logic: "admin" for admin, anything else for participant
-    const role = username.toLowerCase() === 'admin' ? 'admin' : 'participant';
-    const userData = { username, role };
-    setUser(userData);
-    localStorage.setItem('quiz_user', JSON.stringify(userData));
-    return role;
+  const login = async (username, password) => {
+    const userRef = ref(db, `users/${username.toLowerCase()}`);
+    const snapshot = await get(userRef);
+    
+    if (snapshot.exists()) {
+      const userData = snapshot.val();
+      if (userData.password === password) {
+        setUser(userData);
+        localStorage.setItem('quiz_user', JSON.stringify(userData));
+        return userData.role;
+      } else {
+        throw new Error('Contraseña incorrecta');
+      }
+    } else {
+      throw new Error('Usuario no encontrado');
+    }
   };
 
   const logout = () => {
@@ -64,10 +84,11 @@ export function QuizProvider({ children }) {
   };
 
   // Player Controls
-  const joinGame = async (nickname) => {
+  const joinGame = async (nickname, quizId) => {
     const playerId = 'player_' + Math.random().toString(36).substr(2, 9);
     localStorage.setItem('currentPlayerId', playerId);
     setCurrentPlayerId(playerId);
+    setActiveQuizId(quizId);
 
     const playerRef = ref(db, `rooms/main/players/${playerId}`);
     await set(playerRef, {
@@ -106,12 +127,40 @@ export function QuizProvider({ children }) {
     });
   };
 
+  const saveQuizResult = async (quizId, score) => {
+    if (!user) return;
+    const username = user.username.toLowerCase();
+    const resultRef = ref(db, `users/${username}/results/${Date.now()}`);
+    await set(resultRef, {
+      quizId,
+      score,
+      date: new Date().toISOString()
+    });
+    
+    // Update stats
+    const statsRef = ref(db, `users/${username}/stats`);
+    const snapshot = await get(statsRef);
+    const stats = snapshot.val() || { xp: 0, level: 1 };
+    const newXp = (stats.xp || 0) + score;
+    await update(statsRef, {
+      xp: newXp,
+      level: Math.floor(newXp / 1000) + 1
+    });
+    
+    // Refresh user
+    const userRef = ref(db, `users/${username}`);
+    const updatedUser = await get(userRef);
+    setUser(updatedUser.val());
+    localStorage.setItem('quiz_user', JSON.stringify(updatedUser.val()));
+  };
+
   const currentPlayer = currentPlayerId && room?.players ? room.players[currentPlayerId] : null;
 
   return (
     <QuizContext.Provider value={{
       room,
       user,
+      allQuizzes,
       currentPlayer,
       currentPlayerId,
       setRoomStatus,
@@ -119,7 +168,9 @@ export function QuizProvider({ children }) {
       joinGame,
       submitAnswer,
       login,
-      logout
+      logout,
+      saveQuizResult,
+      activeQuizId
     }}>
       {children}
     </QuizContext.Provider>

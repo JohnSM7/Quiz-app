@@ -4,13 +4,15 @@ import { useQuiz } from '../context/QuizContext';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { user, logout, joinGame } = useQuiz();
+  const { user, logout, joinGame, allQuizzes } = useQuiz();
 
-  const handleStartQuiz = async (quizName) => {
-    // In a real app we'd save quiz selection to FB, for now just join the lobby
+  const handleStartQuiz = async (quizId) => {
     await joinGame(user?.username || 'Invitado');
     navigate('/lobby');
   };
+
+  // Filter quizzes based on user's assignments
+  const assignedQuizzes = user?.assignedQuizzes?.map(id => allQuizzes[id]).filter(Boolean) || [];
 
   return (
     <div className="bg-background-dark text-on-surface min-h-screen selection:bg-secondary selection:text-on-secondary">
@@ -41,28 +43,25 @@ export default function Dashboard() {
   <span className="material-symbols-outlined text-4xl text-primary">person</span>
 </div>
 </div>
-<div className="absolute -bottom-1 -right-1 bg-accent-cyan text-background-dark text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter">
-                            Pro
-                        </div>
 </div>
 <div className="flex flex-col">
 <h1 className="text-white text-3xl font-black leading-none tracking-tight">{user?.username || 'USUARIO'}</h1>
 <div className="flex gap-3 mt-2">
 <div className="flex flex-col">
 <span className="text-white/50 text-[10px] uppercase font-bold tracking-widest">Nivel</span>
-<span className="text-primary font-bold text-lg leading-none">12</span>
+<span className="text-primary font-bold text-lg leading-none">{user?.stats?.level || 1}</span>
 </div>
 <div className="w-px h-8 bg-white/10 self-center"></div>
 <div className="flex flex-col">
 <span className="text-white/50 text-[10px] uppercase font-bold tracking-widest">Experiencia</span>
-<span className="text-accent-cyan font-bold text-lg leading-none">8,450 XP</span>
+<span className="text-accent-cyan font-bold text-lg leading-none">{user?.stats?.xp || 0} XP</span>
 </div>
 </div>
 </div>
 </div>
 
 <div className="mt-6 w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-<div className="h-full bg-gradient-to-r from-primary to-accent-cyan w-[75%] rounded-full shadow-[0_0_10px_rgba(38,254,220,0.5)]"></div>
+<div className="h-full bg-gradient-to-r from-primary to-accent-cyan rounded-full shadow-[0_0_10px_rgba(38,254,220,0.5)] transition-all duration-300" style={{ width: `${(user?.stats?.xp % 1000) / 10}%` }}></div>
 </div>
 </div>
 </section>
@@ -72,43 +71,28 @@ export default function Dashboard() {
 </section>
 
 <section className="p-4 space-y-4">
-
-<div className="bg-surface-container rounded-xl overflow-hidden border border-white/5 flex flex-col group">
-<div className="h-32 bg-cover bg-center relative bg-primary/10">
-<div className="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
-<div className="absolute top-3 left-3 bg-primary/90 text-background-dark text-[10px] font-black px-2 py-1 rounded italic uppercase">PELÍCULAS</div>
-</div>
-<div className="p-4 -mt-6 relative z-10 flex justify-between items-end">
-<div>
-<h4 className="text-white text-xl font-black tracking-tight uppercase italic">Reto Marvel</h4>
-<p className="text-white/60 text-xs font-medium mt-1 flex items-center gap-1">
-<span className="material-symbols-outlined text-sm text-accent-cyan">timer</span> 15 Preguntas • 10m
-                        </p>
-</div>
-<button onClick={() => handleStartQuiz('Marvel')} className="bg-accent-cyan hover:bg-white text-background-dark font-black px-5 py-2 rounded-lg text-sm transition-all neon-glow-cyan uppercase tracking-tighter italic">
-                        COMENZAR
-                    </button>
-</div>
-</div>
-
-<div className="bg-surface-container rounded-xl overflow-hidden border border-white/5 flex flex-col relative">
-<div className="absolute top-0 right-0 w-1.5 h-full bg-primary"></div>
-<div className="h-32 bg-cover bg-center relative bg-secondary/10">
-<div className="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
-<div className="absolute top-3 left-3 bg-primary/90 text-background-dark text-[10px] font-black px-2 py-1 rounded italic uppercase">CÓMICS</div>
-</div>
-<div className="p-4 -mt-6 relative z-10 flex justify-between items-end">
-<div>
-<h4 className="text-white text-xl font-black tracking-tight uppercase italic">DC Universe</h4>
-<p className="text-white/60 text-xs font-medium mt-1 flex items-center gap-1">
-<span className="material-symbols-outlined text-sm text-accent-cyan">timer</span> 20 Preguntas • 15m
-                        </p>
-</div>
-<button onClick={() => handleStartQuiz('DC')} className="bg-accent-cyan hover:bg-white text-background-dark font-black px-5 py-2 rounded-lg text-sm transition-all neon-glow-cyan uppercase tracking-tighter italic">
-                        COMENZAR
-                    </button>
-</div>
-</div>
+  {assignedQuizzes.length > 0 ? assignedQuizzes.map(quiz => (
+    <div key={quiz.id} className="bg-surface-container rounded-xl overflow-hidden border border-white/5 flex flex-col group">
+      <div className="h-32 bg-cover bg-center relative" style={{ backgroundImage: `url(${quiz.image})` }}>
+        <div className="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
+        <div className="absolute top-3 left-3 bg-primary/90 text-background-dark text-[10px] font-black px-2 py-1 rounded italic uppercase">{quiz.category}</div>
+      </div>
+      <div className="p-4 -mt-6 relative z-10 flex justify-between items-end">
+        <div>
+          <h4 className="text-white text-xl font-black tracking-tight uppercase italic">{quiz.title}</h4>
+          <p className="text-white/60 text-xs font-medium mt-1 flex items-center gap-1">
+            <span className="material-symbols-outlined text-sm text-accent-cyan">timer</span> 
+            {quiz.questionsCount} Preguntas • {quiz.timeLimit}m
+          </p>
+        </div>
+        <button onClick={() => handleStartQuiz(quiz.id)} className="bg-accent-cyan hover:bg-white text-background-dark font-black px-5 py-2 rounded-lg text-sm transition-all neon-glow-cyan uppercase tracking-tighter italic">
+          COMENZAR
+        </button>
+      </div>
+    </div>
+  )) : (
+    <div className="p-8 text-center text-white/40 italic">No tienes quizzes asignados por ahora.</div>
+  )}
 </section>
 </main>
 </div>
