@@ -8,7 +8,7 @@ const firebaseConfig = {
   storageBucket: "quiz-arena-397e1.firebasestorage.app",
   messagingSenderId: "139006096690",
   appId: "1:139006096690:web:0ded8df577eed863da132b",
-  databaseURL: "https://quiz-arena-397e1-default-rtdb.firebaseio.com"
+  databaseURL: "https://quiz-arena-397e1-default-rtdb.europe-west1.firebasedatabase.app"
 };
 
 const app = initializeApp(firebaseConfig);
