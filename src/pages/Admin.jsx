@@ -217,7 +217,7 @@ export default function Admin() {
                     <div className="mt-6 flex gap-3">
                       <button 
                         onClick={() => loadQuizForEdit(quiz)}
-                        className="flex-1 bg-white/5 hover:bg-primary hover:text-background-dark text-white font-headline font-bold py-3 rounded-xl text-xs transition-with-all uppercase"
+                        className="flex-1 bg-white/5 hover:bg-primary hover:text-background-dark text-white font-headline font-bold py-3 rounded-xl text-xs transition-all uppercase"
                       >
                         Editar
                       </button>
@@ -239,6 +239,7 @@ function UsersManager() {
   const { allUsers, allQuizzes, createUser, assignQuizToUser } = useQuiz();
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [showResultsFor, setShowResultsFor] = useState(null);
 
   const handleCreateUser = async (e) => {
     e.preventDefault();
@@ -275,46 +276,102 @@ function UsersManager() {
             <button className="w-full bg-primary text-background-dark font-black py-4 rounded-xl uppercase tracking-widest hover:brightness-110 transition-all">Crear Usuario</button>
           </form>
         </section>
+
+        <section className="bg-surface-bright rounded-2xl p-8 border border-white/5">
+          <h3 className="text-white text-lg font-black uppercase italic mb-4">Información Correo</h3>
+          <p className="text-white/40 text-sm">Los usuarios creados aquí podrán loguearse con sus credenciales y verán los quizzes asignados en su dashboard.</p>
+        </section>
       </div>
 
       <div className="lg:col-span-8 space-y-6">
-        <h3 className="text-white text-xl font-black uppercase italic">Listado de Usuarios</h3>
+        <div className="flex justify-between items-center">
+          <h3 className="text-white text-2xl font-black uppercase italic tracking-tight">Participantes ({Object.values(allUsers).filter(u => u.role !== 'admin').length})</h3>
+        </div>
+        
         <div className="grid gap-4">
-          {Object.values(allUsers).filter(u => u.role !== 'admin').map(u => (
-            <div key={u.username} className="bg-surface-bright p-6 rounded-2xl border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4 group hover:border-primary/20 transition-all">
-              <div>
-                <h4 className="text-white font-bold text-lg uppercase italic tracking-tight">{u.username}</h4>
-                <p className="text-white/40 text-xs">Nivel {u.stats?.level || 1} • {u.stats?.xp || 0} XP</p>
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {u.assignedQuizzes?.map(qid => (
-                    <span key={qid} className="text-[9px] bg-primary/10 text-primary px-2 py-0.5 rounded-full uppercase font-bold border border-primary/20">
-                      {allQuizzes[qid]?.title || qid}
-                    </span>
-                  ))}
-                  {(!u.assignedQuizzes || u.assignedQuizzes.length === 0) && (
-                    <span className="text-[9px] text-white/20 italic">No tiene quizzes asignados</span>
-                  )}
+          {Object.values(allUsers).filter(u => u.role !== 'admin').map(u => {
+            const results = u.results ? Object.values(u.results) : [];
+            const completedCount = results.length;
+            const assignedCount = u.assignedQuizzes?.length || 0;
+
+            return (
+              <div key={u.username} className="bg-surface-bright overflow-hidden rounded-2xl border border-white/5 hover:border-primary/20 transition-all group">
+                <div className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-black uppercase">{u.username[0]}</div>
+                      <div>
+                        <h4 className="text-white font-bold text-lg uppercase italic leading-none">{u.username}</h4>
+                        <p className="text-white/40 text-[10px] mt-1 uppercase font-bold tracking-widest">Nivel {u.stats?.level || 1} • {u.stats?.xp || 0} XP</p>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {u.assignedQuizzes?.map(qid => {
+                        const isDone = results.some(r => r.quizId === qid);
+                        return (
+                          <span key={qid} className={`text-[9px] px-2 py-1 rounded-full uppercase font-bold border ${isDone ? 'bg-success/10 text-success border-success/30' : 'bg-white/5 text-white/50 border-white/10'}`}>
+                            {allQuizzes[qid]?.title || qid} {isDone ? '• COMPLETADO' : ''}
+                          </span>
+                        );
+                      })}
+                      {assignedCount === 0 && <span className="text-[10px] text-white/20 italic">Sin quizzes asignados</span>}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <button 
+                      onClick={() => setShowResultsFor(showResultsFor === u.username ? null : u.username)}
+                      className="bg-white/5 hover:bg-white/10 text-white/70 text-[10px] font-bold uppercase px-4 py-2 rounded-lg transition-all"
+                    >
+                      {showResultsFor === u.username ? 'Cerrar Resultados' : `Ver Resultados (${completedCount})`}
+                    </button>
+                    
+                    <div className="relative">
+                      <select 
+                        className="bg-primary text-background-dark text-[10px] font-black p-2.5 rounded-lg border-none focus:ring-0 cursor-pointer uppercase tracking-tighter"
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            assignQuizToUser(u.username, e.target.value);
+                          }
+                        }}
+                        defaultValue=""
+                      >
+                        <option value="" disabled>+ ASIGNAR QUIZ</option>
+                        {Object.values(allQuizzes).map(q => (
+                          <option key={q.id} value={q.id}>{q.title}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                 </div>
+
+                {showResultsFor === u.username && (
+                  <div className="bg-background-dark/50 border-t border-white/5 p-6 animate-in slide-in-from-top duration-300">
+                    <h5 className="text-primary text-[10px] font-black uppercase tracking-widest mb-4">Historial de Calificaciones</h5>
+                    {results.length > 0 ? (
+                      <div className="space-y-2">
+                        {results.sort((a,b) => new Date(b.date) - new Date(a.date)).map((res, i) => (
+                          <div key={i} className="flex justify-between items-center p-3 bg-white/5 rounded-xl border border-white/5">
+                            <div>
+                              <p className="text-white text-xs font-bold">{allQuizzes[res.quizId]?.title || 'Quiz Desconocido'}</p>
+                              <p className="text-white/20 text-[9px]">{new Date(res.date).toLocaleDateString()} {new Date(res.date).toLocaleTimeString()}</p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-secondary font-black text-sm">{res.score} PTS</p>
+                              <p className="text-success text-[8px] font-bold uppercase">Finalizado</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-white/20 text-xs italic py-4">Este usuario aún no ha completado ningún quiz.</p>
+                    )}
+                  </div>
+                )}
               </div>
-              <div className="flex gap-2">
-                <select 
-                  className="bg-background-dark text-white text-xs p-3 rounded-xl border-none focus:ring-2 focus:ring-primary/40 cursor-pointer min-w-[150px]"
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      assignQuizToUser(u.username, e.target.value);
-                      alert(`Quiz asignado a ${u.username}`);
-                    }
-                  }}
-                  defaultValue=""
-                >
-                  <option value="" disabled>+ ASIGNAR QUIZ</option>
-                  {Object.values(allQuizzes).map(q => (
-                    <option key={q.id} value={q.id}>{q.title}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
