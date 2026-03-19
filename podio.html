@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-primary { box-shadow: 0 0 40px rgba(156, 66, 244, 0.4); }
+        .glow-secondary { box-shadow: 0 0 40px rgba(255, 104, 167, 0.3); }
+        .glow-tertiary { box-shadow: 0 0 40px rgba(255, 231, 146, 0.3); }
+        .glass-panel { backdrop-filter: blur(12px); background-color: rgba(29, 34, 73, 0.2); }
+        .podium-gradient { background: linear-gradient(180deg, rgba(34, 41, 83, 1) 0%, rgba(8, 11, 39, 1) 100%); }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-dim": "#efc900",
+                        "on-secondary-fixed": "#6b003a",
+                        "on-surface-variant": "#a6a9cb",
+                        "primary": "#ca98ff",
+                        "inverse-primary": "#8523dd",
+                        "secondary-container": "#b90068",
+                        "surface-variant": "#1d2249",
+                        "on-secondary": "#460024",
+                        "on-error-container": "#ffb2b9",
+                        "primary-container": "#c185ff",
+                        "tertiary-container": "#ffd709",
+                        "on-tertiary": "#655400",
+                        "surface-container-highest": "#1d2249",
+                        "surface-tint": "#ca98ff",
+                        "surface-dim": "#080b27",
+                        "outline-variant": "#424664",
+                        "on-secondary-fixed-variant": "#9f0059",
+                        "error-dim": "#d73357",
+                        "secondary": "#ff68a7",
+                        "on-tertiary-fixed": "#453900",
+                        "surface": "#080b27",
+                        "on-background": "#e2e3ff",
+                        "secondary-dim": "#e10080",
+                        "secondary-fixed": "#ffc1d4",
+                        "inverse-surface": "#fbf8ff",
+                        "on-primary": "#46007d",
+                        "on-surface": "#e2e3ff",
+                        "tertiary": "#ffe792",
+                        "on-secondary-container": "#fff5f6",
+                        "tertiary-fixed": "#ffd709",
+                        "error": "#ff6e84",
+                        "on-tertiary-fixed-variant": "#665500",
+                        "on-tertiary-container": "#5b4b00",
+                        "error-container": "#a70138",
+                        "on-primary-fixed-variant": "#420078",
+                        "surface-container-lowest": "#000000",
+                        "tertiary-fixed-dim": "#efc900",
+                        "surface-container": "#121737",
+                        "on-primary-fixed": "#000000",
+                        "surface-bright": "#222953",
+                        "on-error": "#490013",
+                        "outline": "#707393",
+                        "secondary-fixed-dim": "#ffacc8",
+                        "primary-dim": "#9c42f4",
+                        "background": "#080b27",
+                        "surface-container-high": "#171c40",
+                        "inverse-on-surface": "#4f5371",
+                        "surface-container-low": "#0c102f",
+                        "primary-fixed-dim": "#b772ff",
+                        "primary-fixed": "#c185ff",
+                        "on-primary-container": "#350062"
+                    },
+                    fontFamily: {
+                        "headline": ["Plus Jakarta Sans"],
+                        "body": ["Be Vietnam Pro"],
+                        "label": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary min-h-screen overflow-x-hidden">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-[#080b27]/80 backdrop-blur-xl no-border shadow-[0_0_40px_rgba(156,66,244,0.3)] z-50 border-b border-white/10">
+<div class="flex items-center gap-2">
+<span class="text-2xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-[#ca98ff] to-[#9c42f4] font-['Plus_Jakarta_Sans'] tracking-tight">Quiz Party</span>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-slate-400 hover:scale-105 transition-transform duration-200">timer</button>
+<button class="material-symbols-outlined text-[#ca98ff] border-b-2 border-[#ca98ff] hover:scale-105 transition-transform duration-200">leaderboard</button>
+<button class="material-symbols-outlined text-slate-400 hover:scale-105 transition-transform duration-200">account_circle</button>
+</div>
+</header>
+<main class="relative pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto min-h-screen flex flex-col items-center">
+<!-- Background Spotlight/Atmosphere -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none overflow-hidden -z-10">
+<div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[120%] h-[80%] bg-[radial-gradient(circle_at_50%_0%,rgba(156,66,244,0.15)_0%,transparent_70%)]"></div>
+<div class="absolute top-0 left-1/4 w-1 h-full bg-gradient-to-b from-primary/20 to-transparent rotate-12 blur-xl"></div>
+<div class="absolute top-0 right-1/4 w-1 h-full bg-gradient-to-b from-secondary/20 to-transparent -rotate-12 blur-xl"></div>
+</div>
+<!-- Title Section -->
+<div class="text-center mb-16 space-y-4">
+<h1 class="font-headline font-black text-5xl md:text-7xl tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-on-surface to-slate-500 uppercase">
+                GRAN FINAL
+            </h1>
+<p class="font-label text-primary font-bold tracking-[0.3em] uppercase text-sm">CAMPEONES DE LA ARENA</p>
+</div>
+<!-- 3D Podium Construction -->
+<div class="relative w-full max-w-4xl flex items-end justify-center gap-4 md:gap-8 mt-24 mb-12">
+<!-- 2nd Place: MasterMind -->
+<div class="flex flex-col items-center w-1/3 group">
+<div class="relative mb-6">
+<div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-slate-400 p-1 bg-surface-container shadow-[0_0_20px_rgba(166,169,203,0.3)]">
+<img alt="MasterMind Avatar" class="w-full h-full rounded-full bg-surface-bright" data-alt="Stylized avatar for runner up player" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdiqFVsWIGfPeZ-GAP-foToldiCaefqU78pG2nsKVp4iSoSh9zk07DDpfAvqUa7Tbzr8aLgwXEPTA4643u9GcprF8TDo24F_889D_KoqpYHtoG4u_VXn3HzDnvRvSqqTy-EV2Ca0Qj_rV6R3tcWCPlrkM0fe2WXEq1AK3NYtDwph1DxUoChSIl4bJJuHkZ40kvbXeNTspVHvtdp8LShFYY5em2hCLIuTMRQcRnWxJQmq26BewUqXC4LOoKz9opIH6gEOTDRS7H4KU"/>
+</div>
+<div class="absolute -top-4 -right-2 bg-slate-400 text-surface font-bold px-3 py-1 rounded-full text-xs shadow-lg">2nd</div>
+</div>
+<div class="text-center mb-4">
+<p class="font-headline font-bold text-xl text-on-surface">MasterMind</p>
+<p class="font-body font-bold text-slate-400">12,450 PTS</p>
+</div>
+<!-- Podium Block 2 -->
+<div class="w-full h-32 md:h-48 podium-gradient rounded-t-xl border-x border-t border-white/5 flex flex-col items-center justify-center relative overflow-hidden">
+<span class="font-headline font-black text-6xl text-white/5 absolute -bottom-4">2</span>
+<div class="absolute inset-0 bg-gradient-to-t from-transparent to-white/5"></div>
+</div>
+</div>
+<!-- 1st Place: GamerPro (Hero) -->
+<div class="flex flex-col items-center w-1/3 -mt-16 z-10 group">
+<div class="relative mb-8">
+<!-- Gold Crown Icon -->
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 animate-bounce">
+<span class="material-symbols-outlined text-6xl text-tertiary drop-shadow-[0_0_15px_rgba(255,231,146,0.8)]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<div class="w-32 h-32 md:w-44 md:h-44 rounded-full border-4 border-tertiary p-1 bg-surface-container glow-tertiary">
+<img alt="GamerPro Avatar" class="w-full h-full rounded-full bg-surface-bright" data-alt="Champion avatar with bright energy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUwe_HqZ2lf1gU4u6sqgzB2OrWXZwmuSJkRfelRP-vbf7RyCYHNnGMv_tVjyUSo26zi1Q_cjvaFBUG3OyRVZo8AOHmAWboRn8lrJZZYm_te7KOXOa6UIw-A4c3lGbi129euxMqkkMykfnwfCKN_Jp8l3OpNSdZ-jUfJBQZxVxgmVOX9hRtz_irWM8BO5WeSWnjNMQQUEZeuUv4CeV_U8gJpJi40dWy1Fh-VJWuP7nA1dUsq67dVF52Ibxh3vcBdAbd-wNd7WCxtnI"/>
+</div>
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-tertiary text-on-tertiary font-black px-6 py-1 rounded-full text-sm shadow-xl tracking-widest">GANADOR</div>
+</div>
+<div class="text-center mb-6">
+<p class="font-headline font-extrabold text-2xl md:text-3xl text-tertiary drop-shadow-sm">GamerPro</p>
+<p class="font-body font-black text-on-surface text-lg">15,820 PTS</p>
+</div>
+<!-- Podium Block 1 -->
+<div class="w-full h-56 md:h-72 bg-gradient-to-b from-tertiary/20 to-surface-container-high rounded-t-2xl border-x border-t border-tertiary/30 flex flex-col items-center justify-center relative overflow-hidden glow-tertiary">
+<span class="font-headline font-black text-8xl text-tertiary/10 absolute -bottom-6">1</span>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,231,146,0.2)_0%,transparent_70%)]"></div>
+</div>
+</div>
+<!-- 3rd Place: QuizWiz -->
+<div class="flex flex-col items-center w-1/3 group">
+<div class="relative mb-6">
+<div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-secondary-dim p-1 bg-surface-container shadow-[0_0_20px_rgba(225,0,128,0.2)]">
+<img alt="QuizWiz Avatar" class="w-full h-full rounded-full bg-surface-bright" data-alt="Third place contestant avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQbedp9os_fUNHDi2v7kZQxOxRbHbqO1JQs7IEUHKmhlKZq7hPZEd9ZiQDuWaESHJYT4bAK11JOZtGvujKW4iebc7uTB8I9wkPvTIUAarUKH57mOwYN4cdQVH89rNQxy-fgJ3npZ5WErlvBZZhPs6vOH-N_aYcUG_1PFOvNRBs6lqXuoDCI6w0ypQVobyURDlKpQg5kVRwPyeeyDJZYAHJpwbfFLKeLE2NUMtglkHFg7RbEQ1Mg1xVnJIzQyLMcZrX6jsKQU_bahA"/>
+</div>
+<div class="absolute -top-4 -left-2 bg-secondary-dim text-white font-bold px-3 py-1 rounded-full text-xs shadow-lg">3rd</div>
+</div>
+<div class="text-center mb-4">
+<p class="font-headline font-bold text-xl text-on-surface">QuizWiz</p>
+<p class="font-body font-bold text-slate-400">10,100 PTS</p>
+</div>
+<!-- Podium Block 3 -->
+<div class="w-full h-24 md:h-32 podium-gradient rounded-t-xl border-x border-t border-white/5 flex flex-col items-center justify-center relative overflow-hidden">
+<span class="font-headline font-black text-6xl text-white/5 absolute -bottom-4">3</span>
+<div class="absolute inset-0 bg-gradient-to-t from-transparent to-white/5"></div>
+</div>
+</div>
+</div>
+<!-- Bento Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl mt-8">
+<div class="bg-surface-container p-6 rounded-xl border border-white/5 glass-panel flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">flash_on</span>
+<p class="text-on-surface-variant font-label text-xs uppercase tracking-widest">RESPUESTA MÁS RÁPIDA</p>
+<p class="text-2xl font-headline font-bold">0.8s <span class="text-sm font-normal text-slate-500">por GamerPro</span></p>
+</div>
+<div class="bg-surface-container p-6 rounded-xl border border-white/5 glass-panel flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-secondary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">star</span>
+<p class="text-on-surface-variant font-label text-xs uppercase tracking-widest">MAESTRO DEL QUIZ</p>
+<p class="text-2xl font-headline font-bold">MasterMind</p>
+</div>
+<div class="bg-surface-container p-6 rounded-xl border border-white/5 glass-panel flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-tertiary text-4xl mb-2" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<p class="text-on-surface-variant font-label text-xs uppercase tracking-widest">RONDAS PERFECTAS</p>
+<p class="text-2xl font-headline font-bold">4 / 10</p>
+</div>
+</div>
+<!-- Action Area -->
+<div class="mt-16 flex flex-col md:flex-row gap-6 w-full max-w-2xl">
+<button class="flex-1 bg-gradient-to-r from-primary to-primary-dim text-on-primary-container py-5 rounded-xl font-headline font-extrabold text-lg shadow-lg hover:scale-[1.02] active:scale-95 transition-all cubic-bezier(0.34,1.56,0.64,1) flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">replay</span>
+                JUGAR DE NUEVO
+            </button>
+<button class="flex-1 bg-surface-bright text-on-surface border border-outline-variant py-5 rounded-xl font-headline font-extrabold text-lg shadow-lg hover:bg-surface-container-highest transition-all flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">share</span>
+                COMPARTIR PUNTUACIÓN
+            </button>
+</div>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#080b27]/90 backdrop-blur-md border-t border-white/5 shadow-[0_-10px_40px_rgba(8,11,39,0.8)] rounded-t-[3rem] md:hidden">
+<div class="flex flex-col items-center justify-center text-slate-400 p-3 hover:text-[#ca98ff] transition-colors">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Be_Vietnam_Pro'] font-medium text-[10px] uppercase tracking-widest">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 p-3 hover:text-[#ca98ff] transition-colors">
+<span class="material-symbols-outlined">group</span>
+<span class="font-['Be_Vietnam_Pro'] font-medium text-[10px] uppercase tracking-widest">Lobby</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#ca98ff] text-[#080b27] rounded-full p-3 shadow-[0_0_20px_rgba(202,152,255,0.5)] scale-110 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+<span class="font-['Be_Vietnam_Pro'] font-medium text-[10px] uppercase tracking-widest">Rankings</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 p-3 hover:text-[#ca98ff] transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Be_Vietnam_Pro'] font-medium text-[10px] uppercase tracking-widest">Profile</span>
+</div>
+</nav>
+<!-- Floating Spotlight Decoration -->
+<div class="fixed top-0 right-0 p-12 pointer-events-none opacity-20 -z-10">
+<div class="w-96 h-96 bg-primary rounded-full blur-[160px]"></div>
+</div>
+<div class="fixed bottom-0 left-0 p-12 pointer-events-none opacity-20 -z-10">
+<div class="w-96 h-96 bg-secondary rounded-full blur-[160px]"></div>
+</div>
+</body></html>

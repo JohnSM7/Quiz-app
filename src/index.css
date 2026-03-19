@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0e0e10;
+    color: #f6f3f5;
+    font-family: 'Be Vietnam Pro', sans-serif;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(31, 31, 34, 0.6);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    gap: 1.5rem;
+  }
+}

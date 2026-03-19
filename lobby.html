@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&amp;family=Be+Vietnam+Pro:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#f6f3f5",
+              "surface-container-high": "#1f1f22",
+              "secondary": "#26fedc",
+              "on-tertiary-fixed-variant": "#526900",
+              "surface-container": "#19191c",
+              "secondary-container": "#006b5b",
+              "primary": "#d095ff",
+              "primary-fixed": "#c782ff",
+              "primary-fixed-dim": "#bd6efe",
+              "on-background": "#f6f3f5",
+              "surface-variant": "#262528",
+              "on-error": "#490013",
+              "on-error-container": "#ffb2b9",
+              "secondary-dim": "#00efce",
+              "surface-container-lowest": "#000000",
+              "on-secondary": "#005d4f",
+              "on-secondary-fixed": "#00483d",
+              "background": "#0e0e10",
+              "surface-bright": "#2c2c2f",
+              "surface-tint": "#d095ff",
+              "outline-variant": "#48474a",
+              "on-primary-container": "#38005e",
+              "on-tertiary-fixed": "#3a4a00",
+              "surface-container-low": "#131315",
+              "secondary-fixed-dim": "#00efce",
+              "on-primary-fixed-variant": "#450073",
+              "on-tertiary": "#516700",
+              "error-container": "#a70138",
+              "on-surface-variant": "#acaaad",
+              "inverse-surface": "#fcf8fb",
+              "error": "#ff6e84",
+              "on-primary": "#490078",
+              "on-secondary-fixed-variant": "#006859",
+              "tertiary-container": "#cafd00",
+              "primary-dim": "#c57eff",
+              "primary-container": "#c782ff",
+              "surface-container-highest": "#262528",
+              "on-tertiary-container": "#4a5e00",
+              "outline": "#767577",
+              "tertiary-fixed-dim": "#beee00",
+              "on-secondary-container": "#ddfff5",
+              "error-dim": "#d73357",
+              "tertiary-dim": "#beee00",
+              "surface-dim": "#0e0e10",
+              "on-primary-fixed": "#000000",
+              "inverse-primary": "#8534c4",
+              "surface": "#0e0e10",
+              "secondary-fixed": "#26fedc",
+              "inverse-on-surface": "#555557",
+              "tertiary-fixed": "#cafd00",
+              "tertiary": "#f3ffca"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(31, 31, 34, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 20px rgba(208, 149, 255, 0.3);
+        }
+        .neon-glow-secondary {
+            box-shadow: 0 0 20px rgba(38, 254, 220, 0.3);
+        }
+        .bg-mesh {
+            background-color: #0e0e10;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(208, 149, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(38, 254, 220, 0.1) 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-mesh font-body text-on-surface min-h-screen selection:bg-secondary selection:text-on-secondary">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full flex justify-between items-center px-6 py-4 h-20 bg-[#0e0e10]/80 backdrop-blur-xl border-none z-50 shadow-2xl shadow-[#9D4EDD]/10">
+<div class="flex items-center gap-4">
+<span class="text-[#d095ff] font-black italic tracking-tighter text-2xl">QUIZ ARENA</span>
+<div class="h-6 w-[2px] bg-outline-variant/30 hidden md:block"></div>
+<h1 class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-xl uppercase text-[#d095ff] hidden md:block">Marvel Cinematic Universe</h1>
+</div>
+<div class="flex gap-4">
+<button class="text-[#d095ff]/60 hover:brightness-125 transition-all duration-200 active:scale-95 duration-150">
+<span class="material-symbols-outlined">timer</span>
+</button>
+<button class="text-[#d095ff]/60 hover:brightness-125 transition-all duration-200 active:scale-95 duration-150">
+<span class="material-symbols-outlined">pause_circle</span>
+</button>
+</div>
+</header>
+<main class="pt-28 pb-32 px-4 md:px-8 max-w-7xl mx-auto">
+<div class="flex flex-col items-center gap-12">
+<!-- Join Code Hero Section -->
+<section class="w-full text-center space-y-4">
+<p class="font-headline font-extrabold text-secondary tracking-widest text-sm uppercase">ESPERANDO JUGADORES</p>
+<div class="relative inline-block">
+<div class="absolute -inset-4 bg-primary/20 blur-3xl rounded-full"></div>
+<div class="glass-panel relative px-12 py-8 rounded-xl border border-white/5 neon-glow-primary">
+<h2 class="font-headline font-black text-6xl md:text-8xl text-white tracking-tighter">
+                            882 104
+                        </h2>
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary px-4 py-1 rounded-full text-on-primary font-headline font-bold text-xs uppercase tracking-widest">CÓDIGO DE UNIÓN</div>
+</div>
+</div>
+</section>
+<!-- Player Grid -->
+<section class="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+<!-- Player Card: Admin -->
+<div class="flex flex-col items-center gap-3">
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-tr from-primary to-secondary rounded-full opacity-75 blur-sm group-hover:opacity-100 transition duration-500"></div>
+<div class="relative w-24 h-24 rounded-full overflow-hidden border-4 border-surface-container">
+<img alt="" class="w-full h-full object-cover bg-surface-container-highest" data-alt="Stylized portrait of a quiz master admin" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9AjPwg6aGeEz3JbgP9GPSAIoI_D-51j0NryIQQInRe7ESuh9rOU8-wjqOVrpf8IoMsmu4ENoIl0mtsCWObeqFZARb_LGeiWcrTVCaP3pR_59eVsDSFCtDu3z5qkf2lIK_0u3064BD6CeLq83_D9dOlql0Vwe14X1TMUr8ZFnTaUkOt4CKyOAbMWtugNMoQMT3iC8MWC_poGNQRlRGQTdqdq6CTs6-RXQoIpLY4J36TRB6Wmi7behR3Yi0N0YJXOkDWvZya8fb6dA"/>
+</div>
+<div class="absolute bottom-0 right-0 bg-primary-container p-1 rounded-full border-2 border-surface">
+<span class="material-symbols-outlined text-[16px] text-on-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<span class="font-headline font-bold text-primary">MasterQuiz</span>
+</div>
+<!-- Player Card -->
+<div class="flex flex-col items-center gap-3">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-transparent bg-surface-container-high group hover:border-secondary transition-colors cursor-default">
+<img alt="" class="w-full h-full object-cover" data-alt="Animated colorful game controller avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgaS2lO0Jkj7D3ggVAcd-awitOz_FD9VzTbVHUTPv3DeSlnm6HBQnN3yIPJOI5EFc1AXV_Dc2HcZJA-BAE9GS-EfwifIKwYJhsJdZdAb-JRcUgiC7GJh-Nk9LapjM6BuODLWlh98IDcxo4Fy51vODGaiwnnNwNqrGkBpBFIjq4NhFHdyb6liLt1_hvdbePzr3-OZHqqL7IM1zJ1eulunUwR4SsMCWg7TNk-awKmBJJRs7xXbomARwNxotlFS5c1EXvlC316K5aP5Y"/>
+</div>
+<span class="font-body font-medium text-on-surface/80">Player 1</span>
+</div>
+<!-- Player Card -->
+<div class="flex flex-col items-center gap-3">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-transparent bg-surface-container-high group hover:border-secondary transition-colors cursor-default">
+<img alt="" class="w-full h-full object-cover" data-alt="Electric bolt themed profile icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhq4s8Spm2rh3ifhDUIYmy8nia-Q3PjCnowrkiXLStPgL4aN3vD_8Tph2ANbPIVNZSB_oPCiPDGkm_0ftTGXyacRssOPB--pKBUccmITmIwbUixIqJnJCPGn0HIhpBd523eI1LvbElLQe3TAhcImDFYKawK8TyOn5OVWhgJwexzi7VQwshhBjt4lO96JyTE580trqLwkUs7Tk-t_9so2A_ROlFzvgSuUy4GneSX-FMqI60h2Z5hcx9kSfJI3ZH6rb8glUTu5rE1g4"/>
+</div>
+<span class="font-body font-medium text-on-surface/80">ElectroFlash</span>
+</div>
+<!-- Player Card -->
+<div class="flex flex-col items-center gap-3">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-transparent bg-surface-container-high group hover:border-secondary transition-colors cursor-default">
+<img alt="" class="w-full h-full object-cover" data-alt="Human brain neon style avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8PfhhdgT8K3nQs1sflPuGlHFUoNrfDtAfbshAFYwY5309dGXDiCOxCqNE1LnfSVvY8xPaDHCHe9fORqSMX-Nnzuk2vXslyvbH0sST8MXdZjn2o8YE-JLlX04ZxwtKcmYrYJlYu3C5xXQaKkoWcoXoUwT621H-DYaA5MVBrkqbduZZ2VH18a1eo_kj76HV9F2qX3_LI-A0cVdSWbdVY7w3_FLcyHVuhKml4ayJ4Zf5flUK8exDLZFnSWXDxJV4dXxKfJ6TUJ645nU"/>
+</div>
+<span class="font-body font-medium text-on-surface/80">BrainyBoi</span>
+</div>
+<!-- Player Card -->
+<div class="flex flex-col items-center gap-3">
+<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-transparent bg-surface-container-high group hover:border-secondary transition-colors cursor-default">
+<img alt="" class="w-full h-full object-cover" data-alt="Rocket ship launching icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp4zaZ4kJrdc2AnaSV0h0zkusbz_wUPScifz88PLIe64KVJQL07EeOCaRt-e9-KoHJtWNvTOJ9M4cDeycEE6W_M971N7eG1E1SrqoP0bBdMOM50T425dPu-ArzYcKglc3KCdle-D5F4y5mOg6oKYRf5UTIALwFVX7NNq__5tpiW_FnIH5zzJaeEcjoeWAT5-pKpO103FLfEX7f5hWHoCSTlAtgINqUH1C8b-4-lN8GDUHGiXDqsuAL1lsSZ5KF-9IidfRsU1_omGg"/>
+</div>
+<span class="font-body font-medium text-on-surface/80">StarkIndustries</span>
+</div>
+<!-- Empty Slot -->
+<div class="flex flex-col items-center gap-3">
+<div class="w-24 h-24 rounded-full border-2 border-dashed border-outline-variant flex items-center justify-center bg-white/5">
+<span class="material-symbols-outlined text-outline-variant">person_add</span>
+</div>
+<span class="font-body font-medium text-outline">ESPERANDO...</span>
+</div>
+</section>
+<!-- Action Area -->
+<div class="w-full max-w-md space-y-6">
+<button class="w-full py-6 px-8 rounded-full bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline font-black text-xl uppercase tracking-tighter flex items-center justify-center gap-3 hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-primary/20"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span> EMPEZAR ARENA</button>
+<div class="flex items-center justify-center gap-8">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-headline font-bold text-secondary text-sm">5 JUGADORES LISTOS</span>
+</div>
+<div class="h-4 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">settings</span>
+<span class="font-headline font-bold text-on-surface/60 text-sm">AJUSTES DE LA SALA</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-6 bg-[#0e0e10] rounded-t-[2rem] shadow-[0_-8px_32px_rgba(157,78,221,0.15)]">
+<div class="flex flex-col items-center justify-center text-[#d095ff]/50 px-6 py-2 hover:bg-[#d095ff]/10 transition-all rounded-full active:scale-90 duration-200 ease-out">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Plus_Jakarta_Sans'] font-extrabold tracking-widest text-xs uppercase mt-1">APODO</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#d095ff]/50 px-6 py-2 hover:bg-[#d095ff]/10 transition-all rounded-full active:scale-90 duration-200 ease-out">
+<span class="material-symbols-outlined">stars</span>
+<span class="font-['Plus_Jakarta_Sans'] font-extrabold tracking-widest text-xs uppercase mt-1">8,450 PTS</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#26fedc]/20 text-[#26fedc] rounded-full px-6 py-2 active:scale-90 duration-200 ease-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-['Plus_Jakarta_Sans'] font-extrabold tracking-widest text-xs uppercase mt-1">RACHA X3</span>
+</div>
+</nav>
+</body></html>

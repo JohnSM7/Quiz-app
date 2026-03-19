@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QUIZ ARENA - Admin Panel</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#f6f3f5",
+              "surface-container-high": "#1f1f22",
+              "secondary": "#26fedc",
+              "on-tertiary-fixed-variant": "#526900",
+              "surface-container": "#19191c",
+              "secondary-container": "#006b5b",
+              "primary": "#d095ff",
+              "primary-fixed": "#c782ff",
+              "primary-fixed-dim": "#bd6efe",
+              "on-background": "#f6f3f5",
+              "surface-variant": "#262528",
+              "on-error": "#490013",
+              "on-error-container": "#ffb2b9",
+              "secondary-dim": "#00efce",
+              "surface-container-lowest": "#000000",
+              "on-secondary": "#005d4f",
+              "on-secondary-fixed": "#00483d",
+              "background": "#0e0e10",
+              "surface-bright": "#2c2c2f",
+              "surface-tint": "#d095ff",
+              "outline-variant": "#48474a",
+              "on-primary-container": "#38005e",
+              "on-tertiary-fixed": "#3a4a00",
+              "surface-container-low": "#131315",
+              "secondary-fixed-dim": "#00efce",
+              "on-primary-fixed-variant": "#450073",
+              "on-tertiary": "#516700",
+              "error-container": "#a70138",
+              "on-surface-variant": "#acaaad",
+              "inverse-surface": "#fcf8fb",
+              "error": "#ff6e84",
+              "on-primary": "#490078",
+              "on-secondary-fixed-variant": "#006859",
+              "tertiary-container": "#cafd00",
+              "primary-dim": "#c57eff",
+              "primary-container": "#c782ff",
+              "surface-container-highest": "#262528",
+              "on-tertiary-container": "#4a5e00",
+              "outline": "#767577",
+              "tertiary-fixed-dim": "#beee00",
+              "on-secondary-container": "#ddfff5",
+              "error-dim": "#d73357",
+              "tertiary-dim": "#beee00",
+              "surface-dim": "#0e0e10",
+              "on-primary-fixed": "#000000",
+              "inverse-primary": "#8534c4",
+              "surface": "#0e0e10",
+              "secondary-fixed": "#26fedc",
+              "inverse-on-surface": "#555557",
+              "tertiary-fixed": "#cafd00",
+              "tertiary": "#f3ffca"
+            },
+            fontFamily: {
+              "headline": ["Plus Jakarta Sans"],
+              "body": ["Be Vietnam Pro"],
+              "label": ["Plus Jakarta Sans"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #0e0e10;
+            color: #f6f3f5;
+        }
+        h1, h2, h3, .font-headline {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<nav class="fixed top-0 w-full flex justify-between items-center px-6 py-4 h-20 bg-[#0e0e10]/80 backdrop-blur-xl z-50 shadow-2xl shadow-[#9D4EDD]/10">
+<div class="text-[#d095ff] font-black italic tracking-tighter text-2xl">QUIZ ARENA</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-xl uppercase text-[#26fedc] border-b-2 border-[#26fedc] pb-1 hover:brightness-125 transition-all duration-200" href="#">CREATOR</a>
+<a class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-xl uppercase text-[#d095ff]/60 hover:brightness-125 transition-all duration-200" href="#">ANALYTICS</a>
+<a class="font-['Plus_Jakarta_Sans'] font-bold tracking-tight text-xl uppercase text-[#d095ff]/60 hover:brightness-125 transition-all duration-200" href="#">LIBRARY</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#d095ff]/60 hover:brightness-125 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="timer">timer</span>
+</button>
+<button class="text-[#d095ff]/60 hover:brightness-125 transition-all duration-200">
+<span class="material-symbols-outlined" data-icon="pause_circle">pause_circle</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-28 px-4 md:px-8 max-w-7xl mx-auto">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+<div>
+<span class="text-secondary font-headline font-extrabold tracking-widest text-xs uppercase mb-2 block">MODO TALLER</span>
+<h1 class="text-4xl md:text-5xl font-black tracking-tighter text-on-surface">CREAR NUEVO QUIZ</h1>
+</div>
+<div class="flex gap-4">
+<button class="bg-surface-container-highest text-on-surface px-6 py-3 rounded-full font-headline font-bold text-sm hover:brightness-125 transition-all flex items-center gap-2"><span class="material-symbols-outlined text-xl" data-icon="save">save</span> GUARDAR BORRADOR</button>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary-container px-8 py-3 rounded-full font-headline font-black text-sm hover:scale-105 active:scale-95 transition-all flex items-center gap-2 shadow-lg shadow-primary/20"><span class="material-symbols-outlined text-xl" data-icon="rocket_launch">rocket_launch</span> PUBLICAR ARENA</button>
+</div>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Quiz Identity -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Core Settings Card -->
+<section class="bg-surface-container-high rounded-lg p-8 space-y-6">
+<div>
+<label class="block text-primary font-headline font-bold text-xs uppercase tracking-widest mb-3">TÍTULO DEL QUIZ</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-DEFAULT p-4 text-on-surface placeholder:text-outline focus:ring-2 focus:ring-secondary/40 focus:outline-none text-lg font-bold" placeholder="Introduce un nombre épico..." type="text"/>
+</div>
+<div>
+<label class="block text-primary font-headline font-bold text-xs uppercase tracking-widest mb-3">URL DE IMAGEN DE PORTADA</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-none rounded-DEFAULT p-4 text-on-surface placeholder:text-outline focus:ring-2 focus:ring-secondary/40 focus:outline-none" placeholder="https://..." type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline" data-icon="image">image</span>
+</div>
+</div>
+<div class="pt-4">
+<div class="h-48 rounded-lg bg-surface-container-lowest flex items-center justify-center overflow-hidden group cursor-pointer relative">
+<img class="w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" data-alt="Abstract neon geometric pattern background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAb3QDb686w0IGkvuF__L7QUea9OceJ8EtywTgf30hDmw0nMoNvtEDP2NAqHBSLnc11NLorbSC-a1pgtgwBHZGBo3QYtwBI0nJO-TXZfxlVTEf2MN5vYHJLFsd67bKEjHBqPdpZWHxKSCLTwjVPXC5rsEaGZ1qR84QrQTMfVRRxCVnRrql7SXvLRWCfIUsggzRCjgC555E5jlg8Jxo8HEZYwLDO5UgowBcur9YxZMFwg_LUD9BATMv7rtGL0CyNXEDKxDzlH7M2WCU"/>
+<div class="absolute inset-0 flex flex-col items-center justify-center bg-background/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-4xl text-secondary" data-icon="add_a_photo">add_a_photo</span>
+<span class="text-xs font-headline font-bold mt-2">VISTA PREVIA DE PORTADA</span>
+</div>
+<span class="absolute font-headline font-black text-outline/20 text-4xl select-none">PREVIEW</span>
+</div>
+</div>
+</section>
+<!-- Bulk Upload Card -->
+<section class="bg-surface-container-high rounded-lg p-8 border-2 border-dashed border-outline-variant hover:border-secondary/40 transition-colors group">
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-secondary text-3xl" data-icon="upload_file">upload_file</span>
+</div>
+<h3 class="font-headline font-bold text-lg mb-1">Carga Masiva de Preguntas</h3>
+<p class="text-on-surface-variant text-sm mb-6">Arrastra y suelta tu archivo Excel o CSV aquí para poblar el arena al instante.</p>
+<label class="bg-surface-container-highest text-secondary px-6 py-2 rounded-full font-headline font-bold text-xs uppercase cursor-pointer hover:bg-secondary hover:text-on-secondary transition-all">Explorar Archivos <input class="hidden" type="file"/></label>
+</div>
+</section>
+</div>
+<!-- Right Column: Question Editor -->
+<div class="lg:col-span-8 space-y-6">
+<!-- Question Entry Card -->
+<section class="bg-surface-container-high rounded-lg overflow-hidden">
+<div class="bg-surface-container-highest p-6 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary font-black">1</div>
+<h2 class="font-headline font-extrabold text-xl tracking-tight">EDITOR DE PREGUNTAS</h2>
+</div>
+<div class="flex gap-2">
+<button class="p-2 text-outline hover:text-error transition-colors">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="p-8 space-y-8">
+<!-- Question Text -->
+<div class="space-y-3">
+<label class="block text-tertiary font-headline font-bold text-xs uppercase tracking-widest">CONTENIDO DE LA PREGUNTA</label>
+<textarea class="w-full bg-surface-container-lowest border-none rounded-DEFAULT p-6 text-on-surface placeholder:text-outline focus:ring-2 focus:ring-tertiary/40 focus:outline-none text-xl font-medium resize-none" placeholder="¿Cuál es la respuesta definitiva a la vida, el universo y todo lo demás?" rows="3"></textarea>
+</div>
+<!-- Options Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Option A -->
+<div class="relative group">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-xs font-black text-outline group-focus-within:bg-secondary group-focus-within:text-on-secondary transition-colors">A</div>
+<input class="w-full bg-surface-container-low border-none rounded-DEFAULT py-4 pl-16 pr-12 text-on-surface focus:ring-2 focus:ring-secondary/40 focus:outline-none" placeholder="Opción 1" type="text"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="check_circle">check_circle</span>
+</button>
+</div>
+<!-- Option B -->
+<div class="relative group">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-xs font-black text-on-secondary">B</div>
+<input class="w-full bg-surface-container-low border-2 border-secondary/30 rounded-DEFAULT py-4 pl-16 pr-12 text-on-surface focus:ring-2 focus:ring-secondary/40 focus:outline-none" type="text" value="42"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-secondary">
+<span class="material-symbols-outlined text-xl" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</button>
+</div>
+<!-- Option C -->
+<div class="relative group">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-xs font-black text-outline group-focus-within:bg-secondary group-focus-within:text-on-secondary transition-colors">C</div>
+<input class="w-full bg-surface-container-low border-none rounded-DEFAULT py-4 pl-16 pr-12 text-on-surface focus:ring-2 focus:ring-secondary/40 focus:outline-none" placeholder="Opción 3" type="text"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="check_circle">check_circle</span>
+</button>
+</div>
+<!-- Option D -->
+<div class="relative group">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-xs font-black text-outline group-focus-within:bg-secondary group-focus-within:text-on-secondary transition-colors">D</div>
+<input class="w-full bg-surface-container-low border-none rounded-DEFAULT py-4 pl-16 pr-12 text-on-surface focus:ring-2 focus:ring-secondary/40 focus:outline-none" placeholder="Opción 4" type="text"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-secondary transition-colors">
+<span class="material-symbols-outlined text-xl" data-icon="check_circle">check_circle</span>
+</button>
+</div>
+</div>
+<!-- Metadata Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-outline-variant/30">
+<div>
+<label class="block text-primary font-headline font-bold text-xs uppercase tracking-widest mb-3">LÍMITE DE TIEMPO (SEGUNDOS)</label>
+<div class="flex items-center gap-4">
+<input class="flex-1 accent-primary" max="60" min="5" step="5" type="range"/>
+<span class="text-xl font-headline font-black text-primary min-w-[3rem]">20s</span>
+</div>
+</div>
+<div>
+<label class="block text-primary font-headline font-bold text-xs uppercase tracking-widest mb-3">MULTIMEDIA (URL DE IMAGEN/GIF)</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-none rounded-DEFAULT p-3 text-on-surface text-sm focus:ring-2 focus:ring-primary/40 focus:outline-none" placeholder="Añade un toque visual..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline" data-icon="link">link</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Add Question Prompt -->
+<button class="w-full py-8 rounded-lg bg-surface-container-low border-2 border-dashed border-outline-variant hover:border-primary/50 hover:bg-primary/5 transition-all group flex flex-col items-center justify-center gap-2">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-2xl" data-icon="add">add</span>
+</div>
+<span class="font-headline font-bold text-outline group-hover:text-primary transition-colors">AÑADIR SIGUIENTE DESAFÍO</span>
+</button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-6 bg-[#0e0e10] rounded-t-[2rem] shadow-[0_-8px_32px_rgba(157,78,221,0.15)]">
+<div class="flex flex-col items-center justify-center text-[#d095ff]/50 px-6 py-2 hover:bg-[#d095ff]/10 transition-all rounded-full">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Plus_Jakarta_Sans'] font-extrabold tracking-widest text-xs uppercase mt-1">APODO</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#26fedc]/20 text-[#26fedc] rounded-full px-6 py-2 transition-all">
+<span class="material-symbols-outlined" data-icon="stars" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="font-['Plus_Jakarta_Sans'] font-extrabold tracking-widest text-xs uppercase mt-1">8,450 PTS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-[#d095ff]/50 px-6 py-2 hover:bg-[#d095ff]/10 transition-all rounded-full">
+<span class="material-symbols-outlined" data-icon="local_fire_department">local_fire_department</span>
+<span class="font-['Plus_Jakarta_Sans'] font-extrabold tracking-widest text-xs uppercase mt-1">RACHA X3</span>
+</div>
+</footer>
+</body></html>

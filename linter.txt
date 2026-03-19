@@ -1,0 +1,27 @@
+
+C:\Users\johns\OneDrive\Documentos\GitHub\Quiz-app\src\pages\Admin.jsx
+  5:9  error  'navigate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\johns\OneDrive\Documentos\GitHub\Quiz-app\src\pages\Feedback.jsx
+  5:9  error  'navigate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\johns\OneDrive\Documentos\GitHub\Quiz-app\src\pages\FeedbackSimple.jsx
+  5:9  error  'navigate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\johns\OneDrive\Documentos\GitHub\Quiz-app\src\pages\Instrucciones.jsx
+  5:9  error  'navigate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\johns\OneDrive\Documentos\GitHub\Quiz-app\src\pages\Lobby.jsx
+  5:9  error  'navigate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\johns\OneDrive\Documentos\GitHub\Quiz-app\src\pages\PantallaJuego.jsx
+  5:9  error  'navigate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\johns\OneDrive\Documentos\GitHub\Quiz-app\src\pages\Podio.jsx
+  5:9  error  'navigate' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+C:\Users\johns\OneDrive\Documentos\GitHub\Quiz-app\src\pages\Resumen.jsx
+  43:137  error  Parsing error: Expected corresponding JSX closing tag for <svg>
+
+✖ 8 problems (8 errors, 0 warnings)
+
