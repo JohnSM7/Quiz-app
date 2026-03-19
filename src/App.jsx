@@ -27,7 +27,7 @@ function App() {
           <Route path="/" element={<Navigate to="/login" />} />
           
           {/* Protected Participant Routes */}
-          <Route path="/dashboard" element={<RequireAuth role="participant"><Dashboard /></RequireAuth>} />
+          <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
           <Route path="/juego" element={<RequireAuth role="participant"><PantallaJuego /></RequireAuth>} />
           <Route path="/lobby" element={<RequireAuth role="participant"><Lobby /></RequireAuth>} />
           <Route path="/instrucciones" element={<RequireAuth role="participant"><Instrucciones /></RequireAuth>} />
