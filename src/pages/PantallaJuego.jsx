@@ -9,6 +9,7 @@ export default function PantallaJuego() {
   const { room, currentPlayer, currentPlayerId, allQuizzes, submitAnswer } = useQuiz();
   const [timeLeft, setTimeLeft] = useState(15);
   const [answered, setAnswered] = useState(false);
+  const [selectedIdx, setSelectedIdx] = useState(null);
   const [isSolo, setIsSolo] = useState(false);
 
   const quizId = room?.activeQuizId;
@@ -32,6 +33,7 @@ export default function PantallaJuego() {
         status: 'playing' 
       });
       setAnswered(false);
+      setSelectedIdx(null);
       setTimeLeft(currentQuestion?.timeLimit || 15);
     } else {
       navigate('/resumen');
@@ -47,7 +49,6 @@ export default function PantallaJuego() {
         if (prev <= 1) {
           clearInterval(timer);
           if (isSolo && !answered) {
-            // Auto-next if time up in solo
             setTimeout(handleNextSolo, 2000);
           }
           return 0;
@@ -62,47 +63,59 @@ export default function PantallaJuego() {
   const onAnswer = async (index) => {
     if (answered || timeLeft === 0) return;
     setAnswered(true);
+    setSelectedIdx(index);
     const isCorrect = index === currentQuestion.correctIndex;
     await submitAnswer(index, isCorrect, timeLeft);
 
     if (isSolo) {
-      // Small delay then next question
-      setTimeout(handleNextSolo, 1500);
+      setTimeout(handleNextSolo, 2500); // 2.5s to see the result
     }
   };
 
-  if (!currentQuestion) return <div className="text-white p-20 text-center">Cargando pregunta...</div>;
+  if (!currentQuestion) return (
+    <div className="bg-background-dark min-h-screen flex items-center justify-center">
+      <div className="text-primary animate-pulse font-headline font-black text-2xl italic">CARGANDO ARENA...</div>
+    </div>
+  );
 
   return (
-    <div className="bg-background-dark text-on-surface min-h-screen selection:bg-secondary selection:text-on-secondary">
+    <div className="bg-background-dark text-on-surface min-h-screen">
       <header className="fixed top-0 w-full flex justify-between items-center px-6 py-4 h-20 bg-background-dark/80 backdrop-blur-xl z-50 border-b border-white/5">
         <div className="text-primary font-black italic tracking-tighter text-2xl uppercase">QUIZ ARENA</div>
         <div className="flex items-center gap-6">
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-full border ${timeLeft < 5 ? 'bg-error/20 text-error border-error' : 'bg-secondary/20 text-secondary border-secondary'}`}>
+          <div className={`flex items-center gap-2 px-6 py-2 rounded-full border transition-colors ${timeLeft < 5 ? 'bg-error/20 text-error border-error animate-pulse' : 'bg-secondary/20 text-secondary border-secondary'}`}>
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>timer</span>
-            <span className="font-headline font-bold text-xl">{timeLeft}s</span>
+            <span className="font-headline font-bold text-2xl">{timeLeft}s</span>
           </div>
         </div>
       </header>
 
-      <main className="pt-24 pb-32 px-4 md:px-8 max-w-7xl mx-auto flex flex-col items-center">
-        <div className="w-full max-w-4xl space-y-6">
-          <div className="bg-surface-bright rounded-2xl p-8 relative overflow-hidden border border-white/5">
-            <div className="absolute top-0 left-0 w-2 h-full bg-primary shadow-[0_0_15px_rgba(208,149,255,0.5)]"></div>
-            <span className="text-primary/60 text-[10px] font-black tracking-widest uppercase mb-2 block">PREGUNTA {currentQuestionIndex + 1}/{currentQuiz?.questions?.length}</span>
-            <h1 className="text-2xl md:text-3xl font-black text-white italic uppercase tracking-tight leading-tight">
+      <main className="pt-24 pb-32 px-4 md:px-8 max-w-5xl mx-auto">
+        <div className="space-y-6">
+          <div className="bg-surface-bright rounded-2xl p-8 relative overflow-hidden border border-white/5 shadow-2xl">
+            <div className={`absolute top-0 left-0 w-2 h-full shadow-[0_0_20px_rgba(208,149,255,0.4)] transition-colors ${answered ? (selectedIdx === currentQuestion.correctIndex ? 'bg-success' : 'bg-error') : 'bg-primary'}`}></div>
+            <span className="text-white/40 text-[10px] font-black tracking-widest uppercase mb-2 block">PREGUNTA {currentQuestionIndex + 1} DE {currentQuiz?.questions?.length}</span>
+            <h1 className="text-2xl md:text-4xl font-black text-white italic uppercase tracking-tight leading-tight">
               {currentQuestion.text}
             </h1>
           </div>
 
-          <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-surface-container border border-white/5 shadow-2xl">
-            <img src={currentQuiz?.image} alt="Quiz" className="w-full h-full object-cover brightness-50" />
+          <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-surface-container border border-white/5 shadow-inner">
+            <img src={currentQuiz?.image} alt="Quiz" className="w-full h-full object-cover brightness-[0.4]" />
             <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
             
+            <div className="absolute inset-0 flex items-center justify-center">
+               {answered && (
+                 <div className={`text-6xl font-black italic uppercase tracking-tighter animate-in zoom-in duration-300 ${selectedIdx === currentQuestion.correctIndex ? 'text-success drop-shadow-[0_0_20px_rgba(34,197,94,0.5)]' : 'text-error drop-shadow-[0_0_20px_rgba(239,68,68,0.5)]'}`}>
+                   {selectedIdx === currentQuestion.correctIndex ? '¡CORRECTO!' : '¡INCORRECTO!'}
+                 </div>
+               )}
+            </div>
+
             <div className="absolute bottom-6 left-6 right-6">
-              <div className="h-2 w-full bg-white/10 rounded-full overflow-hidden">
+              <div className="h-2.5 w-full bg-white/10 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-secondary transition-all duration-1000 ease-linear shadow-[0_0_15px_rgba(38,254,220,0.5)]" 
+                  className="h-full bg-secondary transition-all duration-1000 ease-linear shadow-[0_0_20px_rgba(38,254,220,0.6)]" 
                   style={{ width: `${(timeLeft / (currentQuestion.timeLimit || 15)) * 100}%` }}
                 ></div>
               </div>
@@ -110,47 +123,69 @@ export default function PantallaJuego() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {currentQuestion.options.map((opt, idx) => (
-              <button 
-                key={idx}
-                disabled={answered || timeLeft === 0}
-                onClick={() => onAnswer(idx)}
-                className={`group relative flex items-center justify-between p-6 rounded-2xl transition-all duration-300 active:scale-95 text-left border ${
-                  answered && idx === currentQuestion.correctIndex ? 'bg-success/20 border-success shadow-[0_0_15px_rgba(34,197,94,0.3)]' :
-                  answered && idx !== currentQuestion.correctIndex ? 'bg-white/5 border-white/5 opacity-40' :
-                  'bg-surface-bright border-white/5 hover:border-primary/40 hover:bg-white/5'
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  <span className={`w-10 h-10 flex items-center justify-center rounded-xl font-headline font-black transition-colors ${
-                    answered && idx === currentQuestion.correctIndex ? 'bg-success text-on-success' : 'bg-primary/20 text-primary group-hover:bg-primary group-hover:text-background-dark'
-                  }`}>
-                    {String.fromCharCode(65 + idx)}
-                  </span>
-                  <span className="text-white font-bold text-lg uppercase italic tracking-tight">{opt}</span>
-                </div>
-              </button>
-            ))}
+            {currentQuestion.options.map((opt, idx) => {
+              const isCorrect = idx === currentQuestion.correctIndex;
+              const isSelected = idx === selectedIdx;
+              
+              let btnClass = "bg-surface-bright border-white/5 hover:border-primary/40 hover:bg-white/5";
+              let iconClass = "bg-primary/20 text-primary";
+
+              if (answered) {
+                if (isCorrect) {
+                  btnClass = "bg-success/20 border-success shadow-[0_0_25px_rgba(34,197,94,0.4)] scale-[1.02]";
+                  iconClass = "bg-success text-on-success";
+                } else if (isSelected && !isCorrect) {
+                  btnClass = "bg-error/20 border-error opacity-100";
+                  iconClass = "bg-error text-white";
+                } else {
+                  btnClass = "bg-white/5 border-white/5 opacity-30 grayscale";
+                }
+              }
+
+              return (
+                <button 
+                  key={idx}
+                  disabled={answered || timeLeft === 0}
+                  onClick={() => onAnswer(idx)}
+                  className={`group relative flex items-center justify-between p-7 rounded-2xl transition-all duration-300 active:scale-95 text-left border ${btnClass}`}
+                >
+                  <div className="flex items-center gap-5">
+                    <span className={`w-12 h-12 flex items-center justify-center rounded-xl font-headline font-black text-xl transition-all ${iconClass}`}>
+                      {String.fromCharCode(65 + idx)}
+                    </span>
+                    <span className="text-white font-black text-xl uppercase italic tracking-tight">{opt}</span>
+                  </div>
+                  {answered && isCorrect && (
+                    <span className="material-symbols-outlined text-success text-3xl animate-in fade-in zoom-in">check_circle</span>
+                  )}
+                  {answered && isSelected && !isCorrect && (
+                    <span className="material-symbols-outlined text-error text-3xl animate-in fade-in zoom-in font-bold">cancel</span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </main>
 
-      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-6 bg-background-dark/95 backdrop-blur-xl border-t border-white/5">
+      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-8 bg-background-dark/95 backdrop-blur-3xl border-t border-white/5">
         <div className="flex flex-col items-center">
-          <span className="text-white/40 text-[9px] font-black uppercase tracking-widest">RACHA</span>
-          <div className="flex items-center gap-1 text-primary">
-            <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>local_fire_department</span>
-            <span className="text-xl font-black font-headline italic">X{currentPlayer?.streak || 0}</span>
+          <span className="text-white/30 text-[10px] font-black uppercase tracking-[0.2em]">RACHA ACTIVA</span>
+          <div className="flex items-center gap-2 text-primary">
+            <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>local_fire_department</span>
+            <span className="text-3xl font-black font-headline italic tracking-tighter">X{currentPlayer?.streak || 0}</span>
           </div>
         </div>
 
-        <div className="bg-secondary/20 border border-secondary/30 px-10 py-3 rounded-full shadow-[0_0_20px_rgba(38,254,220,0.1)]">
-          <span className="text-secondary font-black text-2xl font-headline italic tracking-tighter">{currentPlayer?.score || 0} <span className="text-[10px]">PTS</span></span>
+        <div className="bg-secondary/15 border border-secondary/30 px-12 py-4 rounded-3xl shadow-[0_0_40px_rgba(38,254,220,0.1)] group">
+          <span className="text-secondary font-black text-4xl font-headline italic tracking-tighter group-hover:scale-110 transition-transform block">
+            {currentPlayer?.score?.toLocaleString() || 0} <span className="text-xs uppercase ml-1 opacity-50">PTS</span>
+          </span>
         </div>
 
         <div className="flex flex-col items-center">
-          <span className="text-white/40 text-[9px] font-black uppercase tracking-widest">JUGADOR</span>
-          <span className="text-white font-black font-headline text-xs uppercase italic tracking-wider">{currentPlayer?.nickname || 'PRO PLAYER'}</span>
+          <span className="text-white/30 text-[10px] font-black uppercase tracking-[0.2em]">{isSolo ? 'MODO SOLO' : 'JUGADOR'}</span>
+          <span className="text-white font-black font-headline text-lg uppercase italic tracking-widest">{currentPlayer?.nickname || 'PLAYER'}</span>
         </div>
       </nav>
     </div>

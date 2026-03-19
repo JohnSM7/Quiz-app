@@ -134,8 +134,11 @@ export function QuizProvider({ children }) {
 
   const submitAnswer = async (selectedOption, isCorrect, timeRemaining) => {
     if (!currentPlayerId) return;
+    const isSolo = currentPlayerId.startsWith('solo_');
+    const roomPath = isSolo ? `rooms/solo_${currentPlayerId}` : `rooms/main`;
     const pts = isCorrect ? 1000 + (timeRemaining * 10) : 0;
-    const playerRef = ref(db, `rooms/main/players/${currentPlayerId}`);
+    
+    const playerRef = ref(db, `${roomPath}/players/${currentPlayerId}`);
     const snapshot = await get(playerRef);
     if (!snapshot.exists()) return;
 
@@ -148,7 +151,8 @@ export function QuizProvider({ children }) {
     }
 
     await update(playerRef, { score, streak });
-    await set(ref(db, `rooms/main/answers/${room?.currentQuestionIndex}/${currentPlayerId}`), {
+    // Record answer
+    await set(ref(db, `${roomPath}/answers/${room?.currentQuestionIndex}/${currentPlayerId}`), {
       selectedOption,
       isCorrect,
       pts
